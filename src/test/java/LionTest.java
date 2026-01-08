@@ -21,7 +21,7 @@ public class LionTest {
         this.expectedMane = expectedMane;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters (name = "Тестовые данные: пол={0}, ожидаемая грива={1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {"Самец", true},

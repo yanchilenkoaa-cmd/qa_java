@@ -7,31 +7,26 @@ import java.util.List;
 public class FelineTest {
 
     @Test
-    public void testGetFoodReturnsData() throws Exception {
+    public void testGetFoodReturnsCorrectData() throws Exception {
+        //Проверка, что getFood() возвращает ожидаемый список
         Feline feline = spy(new Feline("Хищник"));
-
         List<String> foodList = List.of("Мясо", "Кости");
         doReturn(foodList).when(feline).getFood();
-
         List<String> result = feline.getFood();
-
         assertEquals(foodList, result);
-        verify(feline).getFood();
     }
 
     @Test
-    public void testGetFoodReturnsEmpty() throws Exception {
+    public void testGetFoodReturnsEmptyList() throws Exception {
+//Проверяем, что getFood() возвращает пустой список
         Feline feline = spy(new Feline("Хищник"));
-
         doReturn(List.of()).when(feline).getFood();
-
         List<String> result = feline.getFood();
-
         assertTrue(result.isEmpty());
-        verify(feline).getFood();
     }
     @Test
-    public void testGetFoodOriginalImplementationReturnsEmpty() throws Exception {
+    public void testGetFoodReturnsEmptyWithoutStub() throws Exception {
+        // Проверка оригинальной реализации (без мокания)
         Feline feline = new Feline("Хищник");
         List<String> result = feline.getFood();
         assertTrue(result.isEmpty());
@@ -39,35 +34,35 @@ public class FelineTest {
 
     @Test
     public void testEatMeatReturnsFood() throws Exception {
+        // Проверка метода eatMeat()
         Feline feline = spy(new Feline("Хищник"));
         List<String> meatList = List.of("Мясо");
         doReturn(meatList).when(feline).getFood();
-
         List<String> result = feline.eatMeat();
         assertEquals(meatList, result);
         verify(feline).getFood();
     }
 
     @Test
-    public void testGetFamily() {
+    public void testGetFamilyReturnsCorrectFamily() {
         Feline feline = new Feline("Хищник");
         assertEquals("Кошачьи", feline.getFamily());
     }
 
     @Test
-    public void testGetKittensDefault() {
+    public void testGetKittensDefaultReturnsOne() {
         Feline feline = new Feline("Хищник");
         assertEquals(1, feline.getKittens());
     }
 
     @Test
-    public void testGetKittensWithParam() {
+    public void testGetKittensWithParameter() {
         Feline feline = new Feline("Хищник");
         assertEquals(5, feline.getKittens(5));
     }
 
     @Test
-    public void testConstructor() {
+    public void testConstructorCreatesObject() {
         Feline feline = new Feline("Хищник");
         assertNotNull(feline);
     }
