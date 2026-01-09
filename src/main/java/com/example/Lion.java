@@ -20,7 +20,6 @@ public class Lion {
     public boolean hasMane() {
         return hasMane;
     }
-
     public List<String> getFood() throws Exception {
         return feline.getFood();
     }

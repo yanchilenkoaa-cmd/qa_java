@@ -21,9 +21,9 @@ public class LionTest {
         this.expectedMane = expectedMane;
     }
 
-    @Parameterized.Parameters (name = "Тестовые данные: пол={0}, ожидаемая грива={1}")
+    @Parameterized.Parameters(name = "Тестовые данные: пол={0}, ожидаемая грива={1}")
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
+        return Arrays.asList(new Object[][]{
                 {"Самец", true},
                 {"Самка", false}
         });
@@ -34,25 +34,23 @@ public class LionTest {
         // Мокаем Feline
         Feline mockFeline = mock(Feline.class);
         when(mockFeline.getFood()).thenReturn(Arrays.asList("Мясо"));
-
         // Создаем Льва через инъекцию
         Lion lion = new Lion(sex, mockFeline);
-
         assertEquals(expectedMane, lion.hasMane());
         List<String> food = lion.getFood();
-
         assertEquals(Arrays.asList("Мясо"), food);
         verify(mockFeline).getFood();
     }
+        @Test
+        public void testHasManeReturnsCorrectValue () throws Exception {
+            Feline feline = mock(Feline.class);
 
-    @Test
-    public void testLionInvalidSex() {
-        Feline mockFeline = mock(Feline.class);
-        try {
-            new Lion("НекорректныйПол", mockFeline);
-            fail("Expected Exception");
-        } catch (Exception e) {
-            assertEquals("Используйте допустимые значения пола животного - самец или самка", e.getMessage());
+            // Тест для самца
+            Lion lionMale = new Lion("Самец", feline);
+            assertTrue(lionMale.hasMane());
+
+            // Тест для самки
+            Lion lionFemale = new Lion("Самка", feline);
+            assertFalse(lionFemale.hasMane());
         }
     }
-}

@@ -7,12 +7,30 @@ import java.util.List;
 public class FelineTest {
 
     @Test
-    public void testGetFoodReturnsCorrectData() throws Exception {
-        //Проверка, что getFood() возвращает ожидаемый список
+    public void testGetFoodReturnsExpectedList() throws Exception {
+        // Создаем экземпляр с шпионом и задаем ожидаемый список
         Feline feline = spy(new Feline("Хищник"));
         List<String> foodList = List.of("Мясо", "Кости");
         doReturn(foodList).when(feline).getFood();
+
+        // Вызываем метод
         List<String> result = feline.getFood();
+
+        // Проверка, что возвращается правильный список
+        assertEquals(foodList, result);
+    }
+
+    @Test
+    public void testGetFoodIsCalledAndReturnsExpected() throws Exception {
+        // Создаем шпиона
+        Feline feline = spy(new Feline("Хищник"));
+        List<String> foodList = List.of("Мясо", "Кости");
+        doReturn(foodList).when(feline).getFood();
+        // Вызываем метод
+        List<String> result = feline.getFood();
+        // Проверяем, что вызвали метод
+        verify(feline).getFood();
+        // Проверка, что результат правильный
         assertEquals(foodList, result);
     }
 
@@ -24,6 +42,7 @@ public class FelineTest {
         List<String> result = feline.getFood();
         assertTrue(result.isEmpty());
     }
+
     @Test
     public void testGetFoodReturnsEmptyWithoutStub() throws Exception {
         // Проверка оригинальной реализации (без мокания)
@@ -33,13 +52,24 @@ public class FelineTest {
     }
 
     @Test
-    public void testEatMeatReturnsFood() throws Exception {
-        // Проверка метода eatMeat()
+    public void testEatMeatReturnsExpectedFoodList() throws Exception {
+        // Создаем шпиона и задаем ожидаемый результат
         Feline feline = spy(new Feline("Хищник"));
         List<String> meatList = List.of("Мясо");
         doReturn(meatList).when(feline).getFood();
+        // Действие: вызываем eatMeat()
         List<String> result = feline.eatMeat();
+        // Проверка, что возвращается правильный список
         assertEquals(meatList, result);
+    }
+
+    @Test
+    public void testEatMeatCallsGetFood() throws Exception {
+        // Создаем шпиона
+        Feline feline = spy(new Feline("Хищник"));
+        // Вызываем eatMeat()
+        feline.eatMeat();
+        // Проверка, что вызван метод getFood()
         verify(feline).getFood();
     }
 
